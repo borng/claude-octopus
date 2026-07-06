@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+## [9.47.2] - 2026-07-06
+
+### Fixed
+
+- **`session-end.sh` sentinel cleanup no longer risks deleting unrelated files** (#563, #567). The `.session-titled-*` prune pipeline (`find | xargs ls -t | tail -n +21 | xargs rm -f`) ran unconditionally; when `find` matched nothing, `xargs` still invoked `ls -t` with zero arguments — its documented default on empty stdin — which listed the current working directory instead and deleted whatever sorted oldest-by-mtime there (reproduced deleting `Makefile`, `LICENSE`, `GOALS.md`, `PRODUCT.md` under `tests/unit/test-hook-err-traps.sh`). The pipeline is now guarded behind a match-count check.
+- **qwen/opencode dispatch gaps and missing agy smoke test** (#566, #568). The qwen dispatch case never resolved a model or passed `--auth-type`, so OPENAI_COMPAT auth (`OPENAI_API_KEY`+`OPENAI_BASE_URL`) hit qwen's non-interactive auth-type error and fell back to a model that 400s against OpenRouter; `qwen_execute()` had the identical gap. The opencode dispatch case now passes `--pure` (correctly ordered before `run`, since it's a global flag) to avoid an indefinite hang in opencode's auto-title path. The provider smoke test now includes Agy as a 4th candidate, stdin-piped with a tool-use-forbidding prompt, so an Agy-only install no longer always reports "no providers responded successfully."
+- **agy used for research defaults** (#569). Research-task routing and council provider detection now wire in `agy` consistently.
+- **tangle dispatch and quality gates hardened** (#571, #572). Tangle dispatch is isolated from provider stdin, the quality gate now fails on blocker outputs, and tangle hard-gate failures are retried.
+
 ## [9.47.1] - 2026-07-02
 
 ### Fixed

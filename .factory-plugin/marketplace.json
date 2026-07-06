@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "Multi-tentacled orchestration plugin for Factory AI Droid",
-    "version": "9.47.1"
+    "version": "9.47.2"
   },
   "plugins": [
     {
       "name": "claude-octopus",
       "source": "./",
-      "description": "v9.47.1 - reliability fixes: atomic_json_update is now race-safe under concurrent agent status writes, agy model pins validate dynamically, and late tangle completions retry with feedback. 32 personas, 49 commands, 54 skills. Run /octo:setup.",
-      "version": "9.47.1",
+      "description": "v9.47.2 - reliability fixes: session-end cleanup no longer risks deleting unrelated files on an empty match, qwen/opencode dispatch and agy smoke-test gaps closed, agy is used for research defaults, and tangle dispatch/quality gates are hardened. 32 personas, 49 commands, 54 skills. Run /octo:setup.",
+      "version": "9.47.2",
       "author": {
         "name": "nyldn"
       },
