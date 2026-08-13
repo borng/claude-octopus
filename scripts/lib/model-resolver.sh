@@ -135,6 +135,9 @@ validate_agy_model_name() {
     local line=""
     while IFS= read -r line; do
         line="${line%$'\r'}"
+        # agy models emits "name<TAB>Description" lines; only the first field
+        # is the model name users may pin.
+        line="${line%%$'\t'*}"
         if [[ "$line" == "$model" ]]; then
             return 0
         fi
